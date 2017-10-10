@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="cocag:cityofclintonagendamodel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+	<!-- Optional meta-data about the model -->
+	<description>City of Clinton Agendas Model</description>
+	<!-- <author>Jeff Potts</author> -->
+	<author>Gene McCullough</author>
+	<version>1.0</version>
+
+	<!-- Imports are required to allow references to definitions in other models -->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.clintonok.gov/model/content/1.0"
+			prefix="cocag" />
+	</namespaces>
+	<constraints>
+		<constraint name="cocag:authorityList" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value>City Council</value>
+					<value>Public Works</value>
+					<value>Airport Authority</value>
+					<value>Hospital Authority</value>
+					<value>Industrial Authority</value>
+					<value>Recreational Authority</value>
+					<value>Solid Waste Authority</value>
+					<value>Board of Adjustments</value>
+					<value>Planning and Zoning Board</value>
+				</list>
+			</parameter>
+		</constraint>
+	</constraints>
+
+	<types>
+		<!-- Enterprise-wide generic document type -->
+		<type name="cocag:doc">
+			<title>City of Clinton Document</title>
+			<parent>cm:content</parent>
+			<associations>
+				<association name="cocag:relatedDocuments">
+					<title>Related Documents</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>cocag:doc</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+			<mandatory-aspects>
+				<aspect>cm:generalclassifiable</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+
+	<aspects>
+		<aspect name="cocag:webable">
+			<title>City of Clinton Webable</title>
+			<properties>
+				<property name="cocag:published">
+					<type>d:date</type>
+				</property>
+				<property name="cocag:isActive">
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="cocag:meeting">
+			<title>City of Clinton Meeting</title>
+			<properties>
+				<property name="cocag:meetingDateTime">
+					<type>d:datetime</type>
+				</property>
+				<property name="cocag:location">
+					<type>d:text</type>
+					<default>City Council Chambers, City Hall</default>
+				</property>
+				<property name="cocag:openingPrayer">
+					<type>d:text</type>
+				</property>
+				<property name="cocag:isPosted">
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="cocag:agenda">
+			<title>City of Clinton Meeting Agenda</title>
+			<properties>
+				<property name="cocag:authority">
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<constraints>
+						<constraint ref="cocag:authorityList" />
+					</constraints>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="cocag:commentary">
+			<title>City of Clinton Agenda Commentary</title>
+			<properties>
+				<property name="cocag:displayOrder">
+					<type>d:int</type>
+				</property>
+				<property name="cocag:displayComment">
+					<type>d:text</type>
+					<default>Action Item For Consideration</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="cocag:commentarySupport">
+			<title>Commentary Support Document</title>
+			<associations>
+				<association name="cocag:commentaryDocument">
+					<title>Supported Item</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cocag:doc</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+		</aspect>
+		<aspect name="cocag:minute">
+			<title>City of Clinton Meeting Minutes</title>
+		</aspect>
+		<aspect name="cocag:claim">
+			<title>City of Clinton Claim</title>
+		</aspect>
+		<aspect name="cocag:approvable">
+			<title>Approvable Item</title>
+			<properties>
+				<property name="cocag:isApproved">
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="cocag:sortable">
+			<title>Sortable Item</title>
+			<properties>
+				<property name="cocag:sortOrder">
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
+		</aspect>
+	</aspects>
+</model>
