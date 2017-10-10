@@ -1,3 +1,10 @@
+# Alfresco Repo Municipal Agendas Module
+
+Content model and webscripts to provide a management and presentation system for municipal agendas.
+
+//see Alfresco Share Municipal Agendas Module for additional management features.
+
+
 # Alfresco Platform JAR Module - SDK 3
 
 To run use `mvn clean install -DskipTests=true alfresco:run` or `./run.sh` and verify that it 
