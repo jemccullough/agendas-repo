@@ -11,7 +11,7 @@
     <bean id="gov.clintonok.city.agendas_repo.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
         <property name="models">
             <list>
-                <value>alfresco/module/${project.artifactId}/model/cocAgendaModel.xml</value>
+                <value>alfresco/module/${project.artifactId}/model/munAgendaModel.xml</value>
             </list>
         </property>
         <property name="labels">

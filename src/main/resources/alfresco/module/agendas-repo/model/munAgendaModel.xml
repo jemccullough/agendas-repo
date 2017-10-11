@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="agnd:municipalAgendaModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+	<!-- Optional meta-data about the model -->
+	<description>Municipal Meeting Agendas Model</description>
+	<!-- <author>Jeff Potts</author> -->
+	<author>Gene McCullough</author>
+	<version>1.0</version>
+
+	<!-- Imports are required to allow references to definitions in other models -->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.clintonok.gov/model/content/1.0"
+			prefix="agnd" />
+	</namespaces>
+	<constraints>
+		<constraint name="agnd:authorityList" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value>City Council</value>
+					<value>Public Works</value>
+					<value>Airport Authority</value>
+					<value>Hospital Authority</value>
+					<value>Industrial Authority</value>
+					<value>Recreational Authority</value>
+					<value>Solid Waste Authority</value>
+					<value>Board of Adjustments</value>
+					<value>Planning and Zoning Board</value>
+				</list>
+			</parameter>
+		</constraint>
+	</constraints>
+
+	<types>
+		<!-- Enterprise-wide generic document type -->
+		<type name="agnd:doc">
+			<title>Municipal Meeting Document</title>
+			<parent>cm:content</parent>
+			<associations>
+				<association name="agnd:relatedDocuments">
+					<title>Related Documents</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>agnd:doc</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+			<mandatory-aspects>
+				<aspect>cm:generalclassifiable</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+
+	<aspects>
+		<aspect name="agnd:webable">
+			<title>Webable Agenda Item</title>
+			<properties>
+				<property name="agnd:published">
+					<type>d:date</type>
+				</property>
+				<property name="agnd:isActive">
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="agnd:meeting">
+			<title>Municipal Authority Meeting</title>
+			<properties>
+				<property name="agnd:meetingDateTime">
+					<type>d:datetime</type>
+				</property>
+				<property name="agnd:location">
+					<type>d:text</type>
+					<default>City Council Chambers, City Hall</default>
+				</property>
+				<property name="agnd:openingPrayer">
+					<type>d:text</type>
+				</property>
+				<property name="agnd:isPosted">
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="agnd:agenda">
+			<title>Municipal Meeting Agenda</title>
+			<properties>
+				<property name="agnd:authority">
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<constraints>
+						<constraint ref="agnd:authorityList" />
+					</constraints>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="agnd:commentary">
+			<title>Municipal Agenda Commentary</title>
+			<properties>
+				<property name="agnd:displayOrder">
+					<type>d:int</type>
+				</property>
+				<property name="agnd:displayComment">
+					<type>d:text</type>
+					<default>Action Item For Consideration</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="agnd:commentarySupport">
+			<title>Commentary Support Document</title>
+			<associations>
+				<association name="agnd:commentaryDocument">
+					<title>Supported Item</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>agnd:doc</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+		</aspect>
+		<aspect name="agnd:minute">
+			<title>Municipal Meeting Minutes</title>
+		</aspect>
+		<aspect name="agnd:claim">
+			<title>Municipal Claims Document</title>
+		</aspect>
+		<aspect name="agnd:approvable">
+			<title>Approvable Item</title>
+			<properties>
+				<property name="agnd:isApproved">
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="agnd:sortable">
+			<title>Sortable Agenda Item</title>
+			<properties>
+				<property name="agnd:sortOrder">
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
+		</aspect>
+	</aspects>
+</model>
