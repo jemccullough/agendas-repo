@@ -1,0 +1,11 @@
+<webscript>
+  <shortname>City Meetings</shortname>
+  <description>List all meetings from a beginning date, default to today</description>
+  <url>/gov/clintonok/meetings/date?q=</url>
+  <url>/gov/clintonok/meetings/date.atom?q=</url>
+  <url>/gov/clintonok/m/d?q=</url>
+  <url>/gov/clintonok/m/d.atom?q=</url>
+  <format default="html">extension</format>
+  <authentication runas="admin">none</authentication>
+  <transaction>required</transaction>
+</webscript>
