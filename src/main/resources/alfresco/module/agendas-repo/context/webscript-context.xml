@@ -17,8 +17,4 @@
 	limitations under the License.
 -->
 <beans>
-	<bean id="webscript.alfresco.tutorials.helloworld.get"
-		  class="gov.clintonok.city.agendas_repo.platformsample.HelloWorldWebScript"
-		  parent="webscript">
-	</bean>
 </beans>
